@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieTix - Online Movie Ticket Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- Login Form -->
+                <form action="#" class="sign-in-form" id="loginForm">
+                    <h2 class="title">Login</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="loginEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn solid">Login</button>
+                    <p class="error-message" id="loginError"></p>
+                </form>
+
+                <!-- Registration Form -->
+                <form action="#" class="sign-up-form" id="registerForm">
+                    <h2 class="title">Sign Up</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="registerName" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-phone"></i>
+                        <input type="text" id="registerPhone" placeholder="Phone Number" required>
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                    <p class="error-message" id="registerError"></p>
+                </form>
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>New here?</h3>
+                    <p>Join MovieTix today and book tickets for the latest movies instantly!</p>
+                    <button class="btn transparent" id="sign-up-btn">Sign Up</button>
+                </div>
+                <img src="/api/placeholder/500/500" alt="Movie tickets illustration" class="image">
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>Already a member?</h3>
+                    <p>Sign in to book your movie tickets and enjoy the latest blockbusters!</p>
+                    <button class="btn transparent" id="sign-in-btn">Sign In</button>
+                </div>
+                <img src="/api/placeholder/500/500" alt="Popcorn illustration" class="image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Template for the Movies Page (Hidden initially) -->
+    <div class="movies-container" id="moviesContainer" style="display: none;">
+        <header class="header">
+            <div class="logo">
+                <h1>MovieTix</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Now Showing</a></li>
+                    <li><a href="#">Coming Soon</a></li>
+                    <li><a href="#">My Bookings</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <span id="userName">User</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <div class="movies-grid" id="moviesGrid">
+            <!-- Movie cards will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Movie Booking Modal -->
+        <div id="bookingModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="movie-details">
+                    <img id="modalMovieImage" src="/api/placeholder/300/400" alt="Movie poster">
+                    <div class="movie-info">
+                        <h2 id="modalMovieTitle">Movie Title</h2>
+                        <p id="modalMovieGenre">Genre: Drama, Action</p>
+                        <p id="modalMovieDuration">Duration: 120 minutes</p>
+                        <p id="modalMovieRating">Rating: PG-13</p>
+                    </div>
+                </div>
+                
+                <div class="booking-section">
+                    <h3>Select Show Date</h3>
+                    <div class="date-selector" id="dateSelector">
+                        <!-- Date options will be generated by JavaScript -->
+                    </div>
+                    
+                    <h3>Select Showtime</h3>
+                    <div class="time-selector" id="timeSelector">
+                        <!-- Time options will be generated by JavaScript -->
+                    </div>
+                    
+                    <h3>Select Seats</h3>
+                    <div class="seats-container">
+                        <div class="screen">Screen</div>
+                        <div class="seats-grid" id="seatsGrid">
+                            <!-- Seats will be generated by JavaScript -->
+                        </div>
+                        <div class="seat-info">
+                            <div class="seat-type">
+                                <div class="seat available"></div>
+                                <span>Available</span>
+                            </div>
+                            <div class="seat-type">
+                                <div class="seat selected"></div>
+                                <span>Selected</span>
+                            </div>
+                            <div class="seat-type">
+                                <div class="seat occupied"></div>
+                                <span>Occupied</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-summary">
+                        <h3>Booking Summary</h3>
+                        <p>Movie: <span id="summaryMovie">Movie Title</span></p>
+                        <p>Date: <span id="summaryDate">Date</span></p>
+                        <p>Time: <span id="summaryTime">Time</span></p>
+                        <p>Seats: <span id="summarySeats">None</span></p>
+                        <p>Total: <span id="summaryTotal">$0.00</span></p>
+                    </div>
+                    
+                    <button id="bookTicketsBtn" class="book-btn">Book Tickets</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Confirmation Modal -->
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content confirmation">
+                <span class="close">&times;</span>
+                <div class="confirmation-content">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Booking Confirmed!</h2>
+                    <div class="confirmation-details">
+                        <p>Booking ID: <span id="bookingId">BK12345</span></p>
+                        <p>Movie: <span id="confirmMovie">Movie Title</span></p>
+                        <p>Date: <span id="confirmDate">Date</span></p>
+                        <p>Time: <span id="confirmTime">Time</span></p>
+                        <p>Seats: <span id="confirmSeats">A1, A2</span></p>
+                        <p>Total Paid: <span id="confirmTotal">$20.00</span></p>
+                    </div>
+                    <p class="confirmation-message">Your tickets have been booked successfully. Enjoy the show!</p>
+                    <button id="closeConfirmBtn" class="btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
