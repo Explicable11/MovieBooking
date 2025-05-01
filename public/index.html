@@ -6,12 +6,84 @@
     <title>MovieTix - Online Movie Ticket Booking</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+     <style>
+         /* Basic styles for the new recommendations modal */
+         .recommendations-modal-content {
+             max-width: 800px; /* Adjust max width as needed */
+         }
+
+         .recommendations-modal-content h2 {
+             text-align: center;
+             margin-bottom: 20px;
+         }
+
+         .recommendations-container {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
+             gap: 20px;
+             justify-content: center;
+             padding: 10px; /* Add some padding inside the container */
+             max-height: 60vh; /* Limit height to make it scrollable if many recommendations */
+             overflow-y: auto; /* Add scroll if content overflows */
+         }
+
+         /* Reusing movie-card styles from the main grid */
+         .recommendations-container .movie-card {
+             /* Specific styling for cards in recommendations modal if needed */
+             width: 100%; /* Ensure cards fill their grid space */
+         }
+
+         /* Style for the recommendation button */
+         .recommendation-button {
+             display: block; /* Make it a block element */
+             width: fit-content; /* Adjust width to content */
+             margin: 20px auto; /* Center the button */
+             padding: 10px 20px;
+             background-color: #3498db; /* A pleasant blue */
+             color: white;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             font-size: 1rem;
+             transition: background-color 0.3s ease;
+         }
+         .recommendation-button:hover {
+             background-color: #2980b9; /* Darker blue on hover */
+         }
+
+
+         .no-recommendations-message {
+             text-align: center;
+             color: #666;
+             font-style: italic;
+             padding: 20px; /* Add padding */
+         }
+
+         /* Make sure movie cards and modal base styles are in style.css */
+
+         /* Added style for the trailer container */
+         .trailer-container {
+             margin-top: 20px; /* Add some space above the trailer */
+             text-align: center; /* Center the iframe */
+         }
+
+          /* Added style for the trailer iframe to make it responsive */
+         .trailer-container iframe {
+             width: 100%; /* Make iframe width responsive */
+             max-width: 600px; /* Set a max width */
+             height: 315px; /* Standard YouTube embed height */
+             display: block; /* Remove extra space below iframe */
+             margin: 0 auto; /* Center the iframe block */
+         }
+
+
+     </style>
 </head>
 <body>
+    <div class="page-transition-overlay"></div>
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <!-- Login Form for Movie Booking -->
                 <form action="#" class="sign-in-form" id="loginForm">
                     <h2 class="title">Login</h2>
                     <div class="input-field">
@@ -26,7 +98,6 @@
                     <p class="error-message" id="loginError"></p>
                 </form>
 
-                <!-- Registration Form -->
                 <form action="#" class="sign-up-form" id="registerForm">
                     <h2 class="title">Sign Up</h2>
                     <div class="input-field">
@@ -58,7 +129,7 @@
                     <p>Join MovieTix today and book tickets for the latest movies instantly!</p>
                     <button class="btn transparent" id="sign-up-btn">Sign Up</button>
                 </div>
-                <img src="/api/placeholder/500/500" alt="Movie tickets illustration" class="image">
+                <img src="movie ticket (2).jpg" alt="Movie tickets illustration" class="image">
             </div>
             <div class="panel right-panel">
                 <div class="content">
@@ -66,12 +137,11 @@
                     <p>Sign in to book your movie tickets and enjoy the latest blockbusters!</p>
                     <button class="btn transparent" id="sign-in-btn">Sign In</button>
                 </div>
-                <img src="/api/placeholder/500/500" alt="Popcorn illustration" class="image">
+                <img src="popcorn.jpg" alt="Popcorn illustration" class="image">
             </div>
         </div>
     </div>
 
-    <!-- Template for the Movies Page (Hidden initially) -->
     <div class="movies-container" id="moviesContainer" style="display: none;">
         <header class="header">
             <div class="logo">
@@ -79,10 +149,9 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Now Showing</a></li>
-                    <li><a href="#">Coming Soon</a></li>
-                    <li><a href="#">My Bookings</a></li>
+                    <li><a href="#" class="active">Now Showing</a></li>
+                    <li><a href="./nowshowing.html">Coming Soon</a></li>
+                    <li><a href="#" id="myBookingsBtn">My Bookings</a></li>
                 </ul>
             </nav>
             <div class="user-menu">
@@ -91,11 +160,9 @@
             </div>
         </header>
 
-        <div class="movies-grid" id="moviesGrid">
-            <!-- Movie cards will be inserted here by JavaScript -->
+         <div class="movies-grid" id="moviesGrid">
         </div>
 
-        <!-- Movie Booking Modal -->
         <div id="bookingModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -106,25 +173,35 @@
                         <p id="modalMovieGenre">Genre: Drama, Action</p>
                         <p id="modalMovieDuration">Duration: 120 minutes</p>
                         <p id="modalMovieRating">Rating: PG-13</p>
+                        <p id="modalMovieDescription">Description: Hello</p>
+                    </div>
+                    <div class="trailer-container">
+                        <iframe id="modalMovieTrailer" src="" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
-                
+
                 <div class="booking-section">
+                    <h3>Select Theater</h3>
+                    <div class="select-wrapper"> <select id="theaterSelector"></select>
+                    </div>
+                    <div id="selectedTheaterDetails" style="margin-top: 15px; padding: 10px; border: 1px solid #eee; border-radius: 5px;">
+                         Select a theater above to see details.
+                    </div>
+                </div>
                     <h3>Select Show Date</h3>
                     <div class="date-selector" id="dateSelector">
-                        <!-- Date options will be generated by JavaScript -->
-                    </div>
-                    
+                        </div>
+
                     <h3>Select Showtime</h3>
                     <div class="time-selector" id="timeSelector">
-                        <!-- Time options will be generated by JavaScript -->
-                    </div>
-                    
+                        </div>
+                        
+
                     <h3>Select Seats</h3>
                     <div class="seats-container">
                         <div class="screen">Screen</div>
                         <div class="seats-grid" id="seatsGrid">
-                            <!-- Seats will be generated by JavaScript -->
+                            <div>Select date, time, and theater to see seats.</div>
                         </div>
                         <div class="seat-info">
                             <div class="seat-type">
@@ -141,35 +218,76 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="booking-summary">
-                        <h3>Booking Summary</h3>
-                        <p>Movie: <span id="summaryMovie">Movie Title</span></p>
-                        <p>Date: <span id="summaryDate">Date</span></p>
-                        <p>Time: <span id="summaryTime">Time</span></p>
-                        <p>Seats: <span id="summarySeats">None</span></p>
-                        <p>Total: <span id="summaryTotal">$0.00</span></p>
+
+                    <button id="paymentButton" style="padding: 10px; text-align: center; border-radius: 5px;">Make Payment</button>
+
+                    <div class="booking-summary" id="bookingSummary" style="display: none;">
+                        <h3>Make Payment</h3>
+                        <div style="display: flex; align-items: center; align-content: center; gap: 30px;">
+                            <div>
+                                <img width="200" src="./payment.jpg" alt="">
+                            </div>
+                            <div>
+                                <p>Movie: <span id="summaryMovie">Movie Title</span></p>
+                                <p>Theater: <span id="summaryTheater">Select a theater</span></p>
+                                <p>Date: <span id="summaryDate">Select a date</span></p>
+                                <p>Time: <span id="summaryTime">Select a time</span></p>
+                                <p>Seats: <span id="summarySeats">None</span></p>
+                                <p>Total: <span id="summaryTotal">Rs. 0.00</span></p>
+                                <label for="Promocode" style="color: black;">Enter Promocode: </label>
+                                <input type="text" name="" placeholder="Promocode" style="padding: 5px;" id="">
+                                <button id="applyButton" style="padding: 5px;">Apply</button>
+                            </div>
+                        </div>
                     </div>
-                    
+                    <script>
+                        const applyButton = document.getElementById('applyButton');
+
+                        applyButton.addEventListener('click', () => {
+                            if (applyButton.innerText === "Apply") {
+                                applyButton.innerText = "Applied";
+                                applyButton.style.backgroundColor = "green";
+                                applyButton.style.color = "white";
+                            } else {
+                                applyButton.innerText = "Apply";
+                                applyButton.style.backgroundColor = "";
+                                applyButton.style.color = "";
+                            }
+                        });
+                    </script>
+
+                    <script>
+                        const paymentButton = document.getElementById('paymentButton');
+                        const bookingSummary = document.getElementById('bookingSummary');
+
+                        paymentButton.addEventListener('click', () => {
+                            if (bookingSummary.style.display === 'none') {
+                                bookingSummary.style.display = 'block';
+                            } else {
+                                bookingSummary.style.display = 'none';
+                            }
+                        });
+                    </script>
+
                     <button id="bookTicketsBtn" class="book-btn">Book Tickets</button>
                 </div>
             </div>
         </div>
 
-        <!-- Booking Confirmation Modal -->
         <div id="confirmationModal" class="modal">
             <div class="modal-content confirmation">
                 <span class="close">&times;</span>
                 <div class="confirmation-content">
                     <i class="fas fa-check-circle"></i>
                     <h2>Booking Confirmed!</h2>
-                    <div class="confirmation-details">
+                    <div class="confirmation-details" style="color: black;">
                         <p>Booking ID: <span id="bookingId">BK12345</span></p>
                         <p>Movie: <span id="confirmMovie">Movie Title</span></p>
+                        <p>Theater: <span id="confirmTheater">Theater Name</span></p>
                         <p>Date: <span id="confirmDate">Date</span></p>
                         <p>Time: <span id="confirmTime">Time</span></p>
                         <p>Seats: <span id="confirmSeats">A1, A2</span></p>
-                        <p>Total Paid: <span id="confirmTotal">$20.00</span></p>
+                        <p>Total Paid: <span id="confirmTotal">Rs. 20.00</span></p>
                     </div>
                     <p class="confirmation-message">Your tickets have been booked successfully. Enjoy the show!</p>
                     <button id="closeConfirmBtn" class="btn">Close</button>
@@ -178,6 +296,15 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <div id="bookingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="bookingsModalClose">&times;</span>
+            <h2>My Bookings</h2>
+            <div id="bookingsContainer"></div>
+            <p id="noBookingsMessage" style="display: none;">You don't have any bookings yet.</p>
+        </div>
+    </div>
+
+     <script src="app.js"></script>
 </body>
 </html>
