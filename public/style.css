@@ -1,14 +1,28 @@
 /* Base Styles and Variables */
 :root {
-    --primary-color: #ff5252;
-    --secondary-color: #3f51b5;
-    --dark-color: #333;
-    --light-color: #f4f4f4;
-    --success-color: #4caf50;
-    --error-color: #f44336;
-    --gray-color: #ccc;
+    /* Luxury Palette: Deep Teal & Antiqued Gold */
+    --primary-color: #a59566; /* Antiqued Gold - Used for accents, buttons, active states, logo */
+    --secondary-color: #033c47; /* Deep Teal - Used for dark backgrounds, complementary elements, gradient */
+    --dark-color: #333333; /* Charcoal - Primary Dark text and elements */
+    --light-color: #FAF0E6; /* Warm Cream - Neutral Light backgrounds */
+    --neutral-medium: #E0DED2; /* Lighter warm grey/taupe - for input fields, options, seats */
+    --neutral-light-alt: #CCCCCC; /* Light grey - for screen */
+    --neutral-dark-alt: #666666; /* Darker grey - for occupied seats */
+    --dark-gray-text: #555555; /* Deep Grey - for general modal text */
+    --success-color: #4f8146; /* Muted Green - Success indicator, confirmation icon/title */
+    --error-color: #f44336; /* Standard Red - Error indicator (kept for clarity) */
+    --gray-color: #9a8a8a; /* Mid-tone Grey - General grey elements, icons, close button */
+    --accent-color: #8A1E2B; /* Optional accent color for future use */
+
+    /* Other variables */
     --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+
+    /* --- Added Variables for 3D Effect --- */
+    --primary-color-glow: rgba(184, 167, 120, 0.8); /* Antiqued Gold with 80% opacity for glow */
+    --highlight-shadow: rgba(255, 255, 255, 0.7); /* Light color for highlights */
+    --shadow-color: rgba(16, 11, 11, 0.3); /* Dark color for shadows */
+    /* --- End Added Variables for 3D Effect --- */
 }
 
 * {
@@ -21,16 +35,47 @@
 body {
     width: 100%;
     min-height: 100vh;
-    background-color: var(--light-color);
+    background-color: var(--light-color); /* Using the Warm Cream */
     overflow-x: hidden;
 }
+
+/* --- New Feature 2: Custom Scrollbar Styling --- */
+/* Apply to the whole body for site-wide effect, or a specific container */
+
+/* Firefox */
+body {
+    scrollbar-width: thin; /* 'auto' or 'thin' */
+    scrollbar-color: var(--primary-color) var(--secondary-color); /* thumb track | Gold thumb on Deep Teal track */
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-color); /* Deep Teal track */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); /* Antiqued Gold thumb */
+    border-radius: 6px; /* Rounded thumb */
+    border: 3px solid var(--secondary-color); /* Border matches track color */
+}
+
+/* Optional: Hover state for the thumb */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a3946c; /* Slightly darker gold on hover */
+}
+/* --- End New Feature 2 --- */
+
 
 /* Login/Register Page Styles */
 .container {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background-color: var(--light-color);
+    background-color: var(--secondary-color); /* Deep Teal */
     overflow: hidden;
 }
 
@@ -77,7 +122,7 @@ form.sign-up-form {
 
 .title {
     font-size: 2.2rem;
-    color: var(--dark-color);
+    color: var(--dark-color); /* Using Charcoal for title */
     margin-bottom: 10px;
 }
 
@@ -85,7 +130,7 @@ form.sign-up-form {
     max-width: 380px;
     width: 100%;
     height: 55px;
-    background-color: #f0f0f0;
+    background-color: var(--neutral-medium); /* Lighter warm grey/taupe */
     margin: 10px 0;
     border-radius: 55px;
     display: grid;
@@ -96,7 +141,7 @@ form.sign-up-form {
 .input-field i {
     text-align: center;
     line-height: 55px;
-    color: #acacac;
+    color: var(--gray-color); /* Mid-tone grey for icons */
     font-size: 1.1rem;
 }
 
@@ -107,11 +152,11 @@ form.sign-up-form {
     line-height: 1;
     font-weight: 600;
     font-size: 1.1rem;
-    color: var(--dark-color);
+    color: var(--dark-color); /* Using Charcoal for input text */
 }
 
 .input-field input::placeholder {
-    color: #aaa;
+    color: var(--gray-color); /* Mid-tone grey for placeholders */
     font-weight: 500;
 }
 
@@ -122,15 +167,15 @@ form.sign-up-form {
     outline: none;
     border-radius: 49px;
     cursor: pointer;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary-color); /* Using Antiqued Gold */
+    color: var(--light-color); /* White text on gold for luxury */
     font-weight: 600;
     margin: 10px 0;
     transition: var(--transition);
 }
 
 .btn:hover {
-    background-color: #ff3939;
+    background-color: #a3946c; /* Slightly darker gold on hover */
 }
 
 .panels-container {
@@ -163,7 +208,7 @@ form.sign-up-form {
 }
 
 .panel .content {
-    color: white;
+    color: var(--light-color); /* White text on the dark panel background */
     transition: 0.9s 0.6s ease-in-out;
 }
 
@@ -181,11 +226,12 @@ form.sign-up-form {
 .btn.transparent {
     margin: 0;
     background: none;
-    border: 2px solid white;
+    border: 2px solid var(--light-color); /* White border for transparent buttons on dark panels */
     width: 130px;
     height: 41px;
     font-weight: 600;
     font-size: 0.8rem;
+    color: var(--light-color); /* White text for transparent buttons */
 }
 
 .right-panel .content, .right-panel .image {
@@ -244,6 +290,7 @@ form.sign-up-form {
     top: -10%;
     right: 48%;
     transform: translateY(-50%);
+    /* Using the Luxury palette for the gradient */
     background-image: linear-gradient(-45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     border-radius: 50%;
     z-index: 6;
@@ -251,7 +298,7 @@ form.sign-up-form {
 }
 
 .error-message {
-    color: var(--error-color);
+    color: var(--error-color); /* Keeping standard red for errors */
     font-size: 0.9rem;
     margin-top: 10px;
     text-align: center;
@@ -261,7 +308,8 @@ form.sign-up-form {
 .movies-container {
     width: 100%;
     min-height: 100vh;
-    background-color: var(--light-color);
+    background-color: var(--secondary-color); /* Deep Teal for the main movie background */
+    color: var(--light-color); /* White text on the dark background */
 }
 
 .header {
@@ -269,12 +317,12 @@ form.sign-up-form {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 5%;
-    background-color: white;
+    background-color: var(--light-color); /* Header background - Warm Cream */
     box-shadow: var(--box-shadow);
 }
 
 .logo h1 {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Using Antiqued Gold for the logo */
     font-size: 2rem;
 }
 
@@ -289,15 +337,40 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: var(--dark-color);
+    color: var(--dark-color); /* Charcoal for navigation links */
     font-weight: 500;
     transition: var(--transition);
+    /* Base transition, adding box-shadow to it later */
+}
+
+/* --- ADDED 3D EFFECT FOR NAVIGATION LINKS --- */
+/* Assuming these classes are added to your HTML <a> tags */
+nav ul li .nav-my-bookings,
+nav ul li .nav-now-showing,
+nav ul li .nav-coming-soon {
+    display: inline-block; /* Required for padding and box-shadow */
+    padding: 5px 8px; /* Add some padding around the text */
+    border-radius: 4px;
+    transition: var(--transition), box-shadow 0.2s ease-in-out; /* Include box-shadow in transition */
+    /* Subtle 3D effect */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.5);
 }
 
 nav ul li a:hover,
-nav ul li a.active {
-    color: var(--primary-color);
+nav ul li a.active,
+/* Enhance 3D on hover/active for targeted links */
+nav ul li .nav-my-bookings:hover,
+nav ul li .nav-my-bookings.active,
+nav ul li .nav-now-showing:hover,
+nav ul li .nav-now-showing.active,
+nav ul li .nav-coming-soon:hover,
+nav ul li .nav-coming-soon.active {
+    color: var(--primary-color); /* Antiqued Gold on hover/active */
+    /* Slightly more pronounced 3D effect on hover/active */
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2), -3px -3px 7px rgba(255, 255, 255, 0.7);
 }
+/* --- END ADDED 3D EFFECT FOR NAVIGATION LINKS --- */
+
 
 .user-menu {
     display: flex;
@@ -307,12 +380,13 @@ nav ul li a.active {
 .user-menu span {
     margin-right: 15px;
     font-weight: 500;
+    color: var(--dark-color); /* Charcoal for user text */
 }
 
 .logout-btn {
     padding: 8px 15px;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary-color); /* Antiqued Gold */
+    color: var(--light-color); /* White text on gold */
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -320,7 +394,7 @@ nav ul li a.active {
 }
 
 .logout-btn:hover {
-    background-color: #ff3939;
+    background-color: #a3946c; /* Slightly darker gold on hover */
 }
 
 .movies-grid {
@@ -331,17 +405,20 @@ nav ul li a.active {
 }
 
 .movie-card {
-    background-color: white;
+    background-color: var(--light-color); /* Warm Cream for movie card backgrounds */
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
 }
 
+/* --- New Feature 1: Enhanced Hover Effect --- */
 .movie-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px) scale(1.02); /* Lift and slightly scale */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
 }
+/* --- End New Feature 1 --- */
+
 
 .movie-poster {
     width: 100%;
@@ -356,13 +433,13 @@ nav ul li a.active {
 .movie-info h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
-    color: var(--dark-color);
+    color: var(--dark-color); /* Charcoal for movie titles */
 }
 
 .movie-meta {
     display: flex;
     justify-content: space-between;
-    color: #777;
+    color: var(--gray-color); /* Mid-tone grey for meta info */
     font-size: 0.9rem;
     margin-bottom: 15px;
 }
@@ -370,8 +447,8 @@ nav ul li a.active {
 .book-now {
     width: 100%;
     padding: 10px;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary-color); /* Antiqued Gold */
+    color: var(--light-color); /* White text on gold */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -379,7 +456,7 @@ nav ul li a.active {
 }
 
 .book-now:hover {
-    background-color: #ff3939;
+    background-color: #a3946c; /* Slightly darker gold on hover */
 }
 
 /* Modal Styles */
@@ -391,11 +468,11 @@ nav ul li a.active {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker overlay for luxury feel */
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--light-color); /* Warm Cream for modal background */
     margin: 5% auto;
     padding: 20px;
     width: 80%;
@@ -409,14 +486,14 @@ nav ul li a.active {
     position: absolute;
     right: 20px;
     top: 15px;
-    color: #aaa;
+    color: var(--gray-color); /* Mid-tone grey for close button */
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
 }
 
 .close:hover {
-    color: var(--dark-color);
+    color: var(--dark-color); /* Charcoal on hover */
 }
 
 .movie-details {
@@ -439,17 +516,17 @@ nav ul li a.active {
 .movie-details h2 {
     font-size: 1.8rem;
     margin-bottom: 15px;
-    color: var(--dark-color);
+    color: var(--dark-color); /* Charcoal for modal title */
 }
 
 .movie-details p {
     margin-bottom: 10px;
-    color: #555;
+    color: var(--dark-gray-text); /* Deep Grey for general modal text */
 }
 
 .booking-section h3 {
     margin: 20px 0 15px;
-    color: var(--dark-color);
+    color: var(--dark-color); /* Charcoal for booking section titles */
 }
 
 .date-selector, .time-selector {
@@ -461,19 +538,34 @@ nav ul li a.active {
 
 .date-option, .time-option {
     padding: 10px 15px;
-    background-color: #f0f0f0;
+    background-color: var(--neutral-medium); /* Lighter warm grey/taupe */
     border-radius: 5px;
     cursor: pointer;
     transition: var(--transition);
+    color: var(--dark-color); /* Charcoal text on light option background */
+    /* --- ADDED 3D EFFECT (from previous request) --- */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle outline */
+    box-shadow:
+        3px 3px 7px var(--shadow-color),    /* Bottom-right shadow */
+        -3px -3px 7px var(--highlight-shadow); /* Top-left highlight */
+    /* --- END ADDED 3D EFFECT --- */
 }
 
 .date-option:hover, .time-option:hover {
-    background-color: #e0e0e0;
+    background-color: #D0CEBF; /* Slightly darker warm grey/taupe on hover */
+    /* Optional: Add a subtle press effect on hover/active */
+    box-shadow:
+        1px 1px 3px var(--shadow-color),
+        -1px -1px 3px var(--highlight-shadow);
+    transform: translateY(1px); /* Simulate being slightly pressed */
 }
 
 .date-option.selected, .time-option.selected {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary-color); /* Antiqued Gold when selected */
+    color: var(--light-color); /* White text on gold */
+    /* Optional: Add a more pronounced press effect when selected */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Dark inset shadow */
+    transform: translateY(0); /* Reset transform from hover if selected */
 }
 
 .seats-container {
@@ -482,7 +574,7 @@ nav ul li a.active {
 
 .screen {
     height: 20px;
-    background-color: #ddd;
+    background-color: var(--neutral-light-alt); /* Light grey for screen */
     text-align: center;
     font-size: 12px;
     line-height: 20px;
@@ -497,28 +589,46 @@ nav ul li a.active {
     grid-template-columns: repeat(10, 1fr);
     gap: 10px;
     margin-bottom: 20px;
+    /* --- ADDED 3D EFFECT (from previous request) --- */
+    background-color: var(--light-color); /* Ensure background for shadow */
+    padding: 15px; /* Add padding inside the 'box' */
+    border-radius: 10px; /* Rounded corners for the box */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle outline */
+    box-shadow:
+        5px 5px 15px var(--shadow-color),    /* Bottom-right shadow */
+        -5px -5px 15px var(--highlight-shadow); /* Top-left highlight */
+    transition: var(--transition); /* Add transition for consistency */
+    /* --- END ADDED 3D EFFECT --- */
 }
 
 .seat {
     width: 25px;
     height: 25px;
-    background-color: #e0e0e0;
+    background-color: var(--neutral-medium); /* Lighter warm grey/taupe for seats */
     border-radius: 5px;
     cursor: pointer;
     transition: var(--transition);
+    /* Optional: Add subtle 3D to individual seats */
+     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .seat:hover {
     transform: scale(1.1);
+    /* Enhance individual seat shadow on hover */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .seat.selected {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color); /* Antiqued Gold when selected */
+    /* Add selected seat shadow */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .seat.occupied {
-    background-color: #888;
+    background-color: var(--neutral-dark-alt); /* Darker grey for occupied seats */
     cursor: not-allowed;
+    pointer-events: none; /* Add this to prevent clicks */
+     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); /* Inset shadow for occupied */
 }
 
 .seat-info {
@@ -532,44 +642,78 @@ nav ul li a.active {
     display: flex;
     align-items: center;
     font-size: 0.9rem;
+    color: var(--dark-color); /* Charcoal for seat type text */
 }
 
 .seat-type .seat {
     margin-right: 5px;
     cursor: default;
+     box-shadow: 1px 1px 3px rgba(88, 82, 3, 0.2); /* Ensure info box seats also have shadow */
 }
 
 .booking-summary {
-    background-color: #f5f5f5;
+    background-color: var(--light-color); /* Warm Cream for booking summary background */
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .booking-summary h3 {
     margin-top: 0;
     margin-bottom: 15px;
+    color: var(--dark-color); /* Charcoal for booking summary title */
 }
 
 .booking-summary p {
     margin-bottom: 10px;
+    color: var(--dark-color); /* Charcoal for booking summary text */
 }
+
+/* These were already using --dark-color via inheritance, but explicitly setting them for clarity */
+/* .date-option, .time-option {
+    color: var(--dark-color);
+}
+
+.booking-summary h3 {
+    color: var(--dark-color);
+} */
+
 
 .book-btn {
     width: 100%;
     padding: 12px;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary-color); /* Antiqued Gold */
+    color: var(--light-color); /* White text on gold */
     border: none;
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    transition: var(--transition);
+    /* Ensure transition covers transform and box-shadow */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease-in-out;
+    /* --- ADDED 3D EFFECT FOR MAKE PAYMENT BUTTON --- */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 10px var(--primary-color-glow); /* Stronger base shadow + gold glow */
+    /* --- END ADDED 3D EFFECT --- */
 }
 
 .book-btn:hover {
-    background-color: #ff3939;
+    background-color: #a3946c; /* Slightly darker gold on hover */
+    /* --- ENHANCED 3D ON HOVER --- */
+    transform: translateY(-2px); /* Lift slightly */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--primary-color-glow); /* More pronounced shadow and glow */
+    /* --- END ENHANCED 3D ON HOVER --- */
 }
+
+.book-btn:active {
+     /* --- ENHANCED 3D ON ACTIVE (PRESS) --- */
+    transform: translateY(0); /* Return to original position */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px var(--primary-color-glow); /* Inset shadow + subtle glow */
+    /* --- END ENHANCED 3D ON ACTIVE (PRESS) --- */
+}
+
 
 /* Confirmation Modal */
 .modal-content.confirmation {
@@ -583,18 +727,18 @@ nav ul li a.active {
 
 .confirmation-content i {
     font-size: 4rem;
-    color: var(--success-color);
+    color: var(--success-color); /* Muted Green for success icon */
     margin-bottom: 20px;
 }
 
 .confirmation-content h2 {
-    color: var(--success-color);
+    color: var(--success-color); /* Muted Green for success title */
     margin-bottom: 20px;
 }
 
 .confirmation-details {
     text-align: left;
-    background-color: #f5f5f5;
+    background-color: var(--light-color); /* Warm Cream for confirmation details background */
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -602,14 +746,350 @@ nav ul li a.active {
 
 .confirmation-details p {
     margin-bottom: 10px;
+    color: var(--dark-color); /* Charcoal for confirmation details text */
 }
 
 .confirmation-message {
     margin-bottom: 20px;
-    color: #555;
+    color: var(--dark-gray-text); /* Deep Grey for confirmation message text */
 }
 
 /* Responsive Styles */
+@media (max-width: 870px) {
+    .container {
+        min-height: 800px;
+        height: 100vh;
+    }
+    .container:before {
+        width: 1500px;
+        height: 1500px;
+        left: 30%;
+        bottom: 68%;
+        transform: translateX(-50%);
+        right: initial;
+        top: initial;
+        transition: 2s ease-in-out;
+    }
+    .signin-signup {
+        width: 100%;
+        left: 50%;
+        top: 95%;
+        transform: translate(-50%, -100%);
+        transition: 1s 0.8s ease-in-out;
+    }
+    .panels-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 2fr 1fr;
+    }
+    .panel {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 2.5rem 8%;
+    }
+    .panel .content {
+        padding-right: 15%;
+        transition: 0.9s 0.8s ease-in-out;
+    }
+    .panel h3 {
+        font-size: 1.2rem;
+    }
+    .panel p {
+        font-size: 0.7rem;
+        padding: 0.5rem 0;
+    }
+    .btn.transparent {
+        width: 110px;
+        height: 35px;
+        font-size: 0.7rem;
+    }
+    .image {
+        width: 200px;
+        transition: 0.9s 0.6s ease-in-out;
+    }
+    .left-panel {
+        grid-row: 1 / 2;
+    }
+    .right-panel {
+        grid-row: 3 / 4;
+    }
+    .right-panel .content, .right-panel .image {
+        transform: translateY(300px);
+    }
+    .container.sign-up-mode:before {
+        transform: translate(-50%, 100%);
+        bottom: 32%;
+        right: initial;
+    }
+    .container.sign-up-mode .left-panel .image,
+    .container.sign-up-mode .left-panel .content {
+        transform: translateY(-300px);
+    }
+    .container.sign-up-mode .signin-signup {
+        top: 5%;
+        transform: translate(-50%, 0);
+        left: 50%;
+    }
+}
+
+@media (max-width: 570px) {
+    form {
+        padding: 0 1.5rem;
+    }
+    .image {
+        display: none;
+    }
+    .panel .content {
+        padding: 0.5rem 1rem;
+    }
+    .container:before {
+        bottom: 72%;
+        left: 50%;
+    }
+    .container.sign-up-mode:before {
+        bottom: 28%;
+        left: 50%;
+    }
+    .movie-details {
+        flex-direction: column;
+    }
+    .movie-details img {
+        margin-right: 0;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 250px;
+    }
+}
+/* Basic styling for the main layout */
+#main-content,
+#my-bookings-view {
+    max-width: 800px; /* Limit width for better readability */
+    margin: 20px auto; /* Center the content */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#my-bookings-view h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style for individual booking items */
+.booking-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.booking-item h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #0056b3; /* A sample highlight color */
+}
+
+.booking-item p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.booking-item p strong {
+    color: #333;
+}
+
+.booking-item hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+.booking-item small {
+    color: #777;
+    font-size: 0.85em;
+}
+
+/* Style for messages (no bookings, error, loading) */
+#no-bookings-message,
+#bookings-error-message,
+#bookings-container div:first-child[id=""] { /* Style the loading message */
+    font-style: italic;
+    color: #666;
+}
+
+#bookings-error-message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Style for the back button */
+#back-to-main-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#back-to-main-btn:hover {
+    background-color: #0056b3;
+}
+
+/* --- MODIFIED: Theater Selector Styles with 3D Effect --- */
+#theaterSelector {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none; /* Remove default arrow */
+
+    /* Base background color - Using the theme color */
+    background-color: var(--light-color); /* Warm Cream from palette */
+
+    /* Custom arrow SVG */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-6.4H28.4c-5%200-9.3%201.8-12.9%205.6-.4.4-.6.8-1%201.2-.4.4-.6.8-.8%201.2-4.3%204-6.4%209.4-6.4%2015.2%200%205.9%202.2%2011.2%206.6%2015.6L124.6%20250c2.8%202.8%206.3%204.2%2010.2%204.2s7.4-1.4%2010.2-4.2l115.4-115.4c4.5-4.4%206.7-9.8%206.7-15.6%200-5.8-2.2-11.1-6.7-15.6z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+
+    /* 3D Effect using box-shadow */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle outline */
+    box-shadow:
+        -4px -4px 8px var(--highlight-shadow), /* Top-left highlight */
+        4px 4px 8px var(--shadow-color); /* Bottom-right shadow */
+
+    /* Add transition for smooth effect */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.2s ease;
+}
+
+/* Wrap the select in a div for positioning the custom arrow */
+.select-wrapper {
+    position: relative;
+    display: inline-block; /* Or block, depending on layout */
+}
+
+/* Add focus styles */
+#theaterSelector:focus {
+    outline: none;
+    border-color: var(--primary-color); /* Use Antiqued Gold */
+    /* Combine glow with 3D shadows on focus */
+    box-shadow:
+        0 0 8px var(--primary-color-glow), /* Gold glow */
+        -2px -2px 5px rgba(255, 255, 255, 0.5), /* Keep some highlight */
+        2px 2px 4px rgba(0, 0, 0, 0.1); /* Keep some shadow */
+    transform: translateY(0); /* Ensure it's not lifted when focused */
+}
+
+/* Optional: Add hover style to enhance 3D effect */
+#theaterSelector:hover {
+    border-color: rgba(0, 0, 0, 0.1); /* subtle border change */
+    /* More pronounced 3D shadow on hover */
+    box-shadow:
+        -5px -5px 10px rgba(255, 255, 255, 0.8), /* More pronounced highlight */
+        5px 5px 10px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
+    transform: translateY(-2px); /* Slightly more lift on hover */
+}
+
+/* Note: Styling of the dropdown options list itself is very limited and browser-dependent */
+/* --- END MODIFIED: Theater Selector Styles with 3D Effect --- */
+
+
+/* Basic styling for the main layout */
+#main-content,
+#my-bookings-view {
+    max-width: 800px; /* Limit width for better readability */
+    margin: 20px auto; /* Center the content */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#my-bookings-view h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style for individual booking items */
+.booking-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.booking-item h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #0056b3; /* A sample highlight color */
+}
+
+.booking-item p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.booking-item p strong {
+    color: #333;
+}
+
+.booking-item hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+.booking-item small {
+    color: #777;
+    font-size: 0.85em;
+}
+
+/* Style for messages (no bookings, error, loading) */
+#no-bookings-message,
+#bookings-error-message,
+#bookings-container div:first-child[id=""] { /* Style the loading message */
+    font-style: italic;
+    color: #666;
+}
+
+#bookings-error-message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Style for the back button */
+#back-to-main-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#back-to-main-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Styles (kept as is) */
 @media (max-width: 870px) {
     .container {
         min-height: 800px;
