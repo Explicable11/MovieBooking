@@ -1,1 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieTix Premium - Online Movie Ticket Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e4b721;
+            --primary-dark: #d4a716;
+            --dark: #0f0f0f;
+            --dark-light: #1a1a1a;
+            --light: #ffffff;
+            --gray: #a0a0a0;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(180deg, rgba(15,15,15,0.9) 0%, rgba(15,15,15,0.7) 100%);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), #f5d742);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--light);
+        }
+        
+        nav ul li a.active:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #userName {
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .logout-btn {
+            background-color: transparent;
+            color: var(--gray);
+            border: 1px solid var(--gray);
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .logout-btn:hover {
+            color: var(--light);
+            border-color: var(--light);
+        }
+        
+        /* Movie Section Styles */
+        .coming-soon-section {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .movie-card-premium {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .movie-card-premium:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        
+        .movie-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .movie-poster {
+            width: 280px;
+            height: 420px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .movie-poster:hover {
+            transform: scale(1.03);
+        }
+        
+        .movie-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .movie-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .meta-item i {
+            color: var(--primary);
+        }
+        
+        .movie-director, .movie-cast {
+            color: var(--gray);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .movie-synopsis {
+            color: var(--light);
+            margin: 20px 0;
+            line-height: 1.7;
+        }
+        
+        .movie-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            padding: 0 30px 30px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .trailer-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .trailer-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .ratings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .rating-item {
+            background-color: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .rating-source {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .rating-score {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--dark);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(228, 183, 33, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(228, 183, 33, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .social-share {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        .facebook {
+            background-color: #3b5998;
+        }
+        
+        .twitter {
+            background-color: #1da1f2;
+        }
+        
+        .email {
+            background-color: #d44638;
+        }
+        
+        /* Premium Features */
+        .premium-features {
+            background: linear-gradient(135deg, rgba(228,183,33,0.1) 0%, rgba(15,15,15,0.8) 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(228,183,33,0.2);
+        }
+        
+        .features-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features-title i {
+            font-size: 20px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .feature-icon {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 3px;
+        }
+        
+        .feature-text {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        /* Countdown Timer */
+        .countdown-timer {
+            background-color: rgba(228,183,33,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            display: inline-flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .timer-item {
+            text-align: center;
+        }
+        
+        .timer-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .timer-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .movie-header {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .movie-poster {
+                width: 100%;
+                height: auto;
+                max-height: 500px;
+            }
+            
+            .movie-badge {
+                position: static;
+                margin-bottom: 15px;
+                align-self: flex-start;
+            }
+            
+            .coming-soon-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-transition-overlay"></div>
+    
+    <div class="movies-container" id="moviesContainer">
+        <header class="header">
+            <div class="logo">
+                <h1>MovieTix</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Now Showing</a></li>
+                    <li><a href="./nowshowing.html" class="active">Coming Soon</a></li>
+                    <li><a href="./index.html" id="myBookingsBtn">My Bookings</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <span id="userName"></span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <div class="coming-soon-section">
+            <!-- Movie 1: Hereditary -->
+            <div class="movie-card-premium">
+                <div class="movie-badge">Exclusive</div>
+                <div class="movie-header">
+                    <img src="./Hereditary.png" alt="Hereditary" class="movie-poster">
+                    <div class="movie-info">
+                        <h2 class="movie-title">Hereditary</h2>
+                        <div class="movie-meta">
+                            <span class="meta-item"><i class="fas fa-tag"></i> Horror, Mystery</span>
+                            <span class="meta-item"><i class="fas fa-clock"></i> 135 min</span>
+                            <span class="meta-item"><i class="fas fa-certificate"></i> R</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> July 15, 2025</span>
+                        </div>
+                        <p class="movie-director"><strong>Director:</strong> Ari Aster</p>
+                        <p class="movie-cast"><strong>Cast:</strong> Toni Collette, Gabriel Byrne, Alex Wolff, Milly Shapiro</p>
+                        <p class="movie-synopsis">
+                            Miniature artist Annie Graham lives in northern Utah with her psychiatrist husband Steve and their two children. After the death of her secretive mother, Annie begins to unravel cryptic and increasingly terrifying secrets about their ancestry. The more they discover, the more they find themselves trying to outrun the sinister fate they seem to have inherited.
+                        </p>
+                        
+                        <div class="countdown-timer">
+                            <div class="timer-item">
+                                <div class="timer-value" id="days1">45</div>
+                                <div class="timer-label">Days</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="hours1">12</div>
+                                <div class="timer-label">Hours</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="minutes1">30</div>
+                                <div class="timer-label">Minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <div class="premium-features">
+                        <h3 class="features-title"><i class="fas fa-crown"></i> Premium Benefits</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-ticket-alt feature-icon"></i>
+                                <span class="feature-text">Early access to tickets (Available now for Premium members)</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chair feature-icon"></i>
+                                <span class="feature-text">Preferred seating selection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-percentage feature-icon"></i>
+                                <span class="feature-text">15% discount on concessions</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-gift feature-icon"></i>
+                                <span class="feature-text">Exclusive merchandise offers</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">Trailer</h3>
+                    <div class="trailer-container">
+                        <iframe src="https://www.youtube.com/embed/MJNR58zaStE?si=fOHH_iT7xfM5LZ5S" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h3 class="section-title">Ratings</h3>
+                    <div class="ratings-grid">
+                        <div class="rating-item">
+                            <div class="rating-source">IMDb</div>
+                            <div class="rating-score">7.3/10</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-source">Rotten Tomatoes</div>
+                            <div class="rating-score">89%</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-source">Metacritic</div>
+                            <div class="rating-score">87/100</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">About the Movie</h3>
+                    <p class="movie-synopsis">
+                        After her mother passes away, Annie and the rest of the family are grief-stricken. Soon, strange things start occurring and the horrifying truth about Annie's ancestry begins to come to light. This chilling exploration of family, grief, and inherited trauma redefined modern horror cinema with its atmospheric dread and unforgettable performances.
+                    </p>
+                    
+                    <div class="action-buttons">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-ticket-alt" style="margin-right: 8px;"></i> Book Early (Premium)
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="far fa-calendar-plus" style="margin-right: 8px;"></i> Add to Calendar
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-heart" style="margin-right: 8px;"></i> Add to Watchlist
+                        </a>
+                    </div>
+                    
+                    <h3 class="section-title">Share</h3>
+                    <div class="social-share">
+                        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Movie 2: Bholaa -->
+            <div class="movie-card-premium">
+                <div class="movie-badge">Action</div>
+                <div class="movie-header">
+                    <img src="./images.jpeg" alt="Bholaa" class="movie-poster">
+                    <div class="movie-info">
+                        <h2 class="movie-title">Bholaa</h2>
+                        <div class="movie-meta">
+                            <span class="meta-item"><i class="fas fa-tag"></i> Action, Crime, Thriller</span>
+                            <span class="meta-item"><i class="fas fa-clock"></i> 144 min</span>
+                            <span class="meta-item"><i class="fas fa-certificate"></i> Not Rated</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> July 15, 2025</span>
+                        </div>
+                        <p class="movie-director"><strong>Director:</strong> Ajay Devgn</p>
+                        <p class="movie-cast"><strong>Cast:</strong> Ajay Devgn, Tabu</p>
+                        <p class="movie-synopsis">
+                            Fresh out of a decade in prison and yearning to meet his daughter for the first time, Bholaa's path to redemption is violently interrupted when he becomes entangled in a large-scale drug bust. He must transport a group of unconscious police officers through a gauntlet of heavily armed criminals who want the confiscated narcotics, turning a simple journey into a brutal fight for survival against overwhelming odds.
+                        </p>
+                        
+                        <div class="countdown-timer">
+                            <div class="timer-item">
+                                <div class="timer-value" id="days2">45</div>
+                                <div class="timer-label">Days</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="hours2">12</div>
+                                <div class="timer-label">Hours</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="minutes2">30</div>
+                                <div class="timer-label">Minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <div class="premium-features">
+                        <h3 class="features-title"><i class="fas fa-crown"></i> Premium Benefits</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-ticket-alt feature-icon"></i>
+                                <span class="feature-text">Early access to tickets (Available now for Premium members)</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chair feature-icon"></i>
+                                <span class="feature-text">Preferred seating selection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-percentage feature-icon"></i>
+                                <span class="feature-text">15% discount on concessions</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-gift feature-icon"></i>
+                                <span class="feature-text">Exclusive merchandise offers</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">Trailer</h3>
+                    <div class="trailer-container">
+                        <iframe src="https://www.youtube.com/embed/K-EMszLvRIQ?si=0BAYCaadehicUWRU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h3 class="section-title">Ratings</h3>
+                    <div class="ratings-grid">
+                        <div class="rating-item">
+                            <div class="rating-source">IMDb</div>
+                            <div class="rating-score">6.5/10</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-source">Rotten Tomatoes</div>
+                            <div class="rating-score">--%</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">About the Movie</h3>
+                    <p class="movie-synopsis">
+                        A relentless, action-packed thriller set over the course of a single night. A man with a dark past must fight through a city's criminal underworld to protect innocent lives and reunite with his estranged daughter. With breathtaking action sequences and emotional depth, Bholaa promises to be one of the most intense cinematic experiences of the year.
+                    </p>
+                    
+                    <div class="action-buttons">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-ticket-alt" style="margin-right: 8px;"></i> Book Early (Premium)
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="far fa-calendar-plus" style="margin-right: 8px;"></i> Add to Calendar
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-heart" style="margin-right: 8px;"></i> Add to Watchlist
+                        </a>
+                    </div>
+                    
+                    <h3 class="section-title">Share</h3>
+                    <div class="social-share">
+                        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Movie 3: Arrival -->
+            <div class="movie-card-premium">
+                <div class="movie-badge">Re-release</div>
+                <div class="movie-header">
+                    <img src="./arrival.jpeg" alt="Arrival" class="movie-poster">
+                    <div class="movie-info">
+                        <h2 class="movie-title">Arrival</h2>
+                        <div class="movie-meta">
+                            <span class="meta-item"><i class="fas fa-tag"></i> Drama, Sci-Fi</span>
+                            <span class="meta-item"><i class="fas fa-clock"></i> 116 min</span>
+                            <span class="meta-item"><i class="fas fa-certificate"></i> PG-13</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> August 2, 2025</span>
+                        </div>
+                        <p class="movie-director"><strong>Director:</strong> Denis Villeneuve</p>
+                        <p class="movie-cast"><strong>Cast:</strong> Amy Adams, Jeremy Renner, Forest Whitaker</p>
+                        <p class="movie-synopsis">
+                            A thought-provoking science fiction drama that explores the profound impact of extraterrestrial first contact not through conflict, but through communication. When twelve mysterious alien spacecraft appear across the globe, a linguistics expert is tasked with deciphering their complex language to understand their purpose before escalating global tensions lead to war.
+                        </p>
+                        
+                        <div class="countdown-timer">
+                            <div class="timer-item">
+                                <div class="timer-value" id="days3">63</div>
+                                <div class="timer-label">Days</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="hours3">12</div>
+                                <div class="timer-label">Hours</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="minutes3">30</div>
+                                <div class="timer-label">Minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <div class="premium-features">
+                        <h3 class="features-title"><i class="fas fa-crown"></i> Premium Benefits</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-ticket-alt feature-icon"></i>
+                                <span class="feature-text">Early access to tickets (Available now for Premium members)</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chair feature-icon"></i>
+                                <span class="feature-text">Preferred seating selection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-percentage feature-icon"></i>
+                                <span class="feature-text">15% discount on concessions</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-gift feature-icon"></i>
+                                <span class="feature-text">Exclusive merchandise offers</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">Trailer</h3>
+                    <div class="trailer-container">
+                        <iframe src="https://www.youtube.com/embed/tFMo3UJ4B4g?si=HbeQUqoQgjcsJ5LU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h3 class="section-title">Ratings</h3>
+                    <div class="ratings-grid">
+                        <div class="rating-item">
+                            <div class="rating-source">IMDb</div>
+                            <div class="rating-score">7.9/10</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-source">Rotten Tomatoes</div>
+                            <div class="rating-score">94%</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-source">Metacritic</div>
+                            <div class="rating-score">81/100</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">About the Movie</h3>
+                    <p class="movie-synopsis">
+                        The film delves into the nature of language, time, and the universal human experience of connection and loss in the face of the unknown. It's a story about misunderstanding and unity in a world on the brink of chaos. This special re-release includes never-before-seen footage and an exclusive behind-the-scenes documentary.
+                    </p>
+                    
+                    <div class="action-buttons">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-ticket-alt" style="margin-right: 8px;"></i> Book Early (Premium)
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="far fa-calendar-plus" style="margin-right: 8px;"></i> Add to Calendar
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-heart" style="margin-right: 8px;"></i> Add to Watchlist
+                        </a>
+                    </div>
+                    
+                    <h3 class="section-title">Share</h3>
+                    <div class="social-share">
+                        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Movie 4: Until Dawn -->
+            <div class="movie-card-premium">
+                <div class="movie-badge">New</div>
+                <div class="movie-header">
+                    <img src="./until dawn.jpg" alt="Until Dawn" class="movie-poster">
+                    <div class="movie-info">
+                        <h2 class="movie-title">Until Dawn</h2>
+                        <div class="movie-meta">
+                            <span class="meta-item"><i class="fas fa-tag"></i> Horror, Thriller</span>
+                            <span class="meta-item"><i class="fas fa-clock"></i> 103 min</span>
+                            <span class="meta-item"><i class="fas fa-certificate"></i> R</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> September 10, 2025</span>
+                        </div>
+                        <p class="movie-director"><strong>Director:</strong> David F. Sandberg</p>
+                        <p class="movie-cast"><strong>Cast:</strong> Ella Rubin, Michael Cimino, Ji-young Yoo, Odessa A'zion</p>
+                        <p class="movie-synopsis">
+                            A narrative-driven horror experience that thrusts a group of young adults into a terrifying fight for survival against unseen forces and a malevolent presence during a secluded mountain getaway. A year after a tragic accident at the same lodge, the friends gather, only to find themselves trapped and hunted until daybreak.
+                        </p>
+                        
+                        <div class="countdown-timer">
+                            <div class="timer-item">
+                                <div class="timer-value" id="days4">102</div>
+                                <div class="timer-label">Days</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="hours4">12</div>
+                                <div class="timer-label">Hours</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-value" id="minutes4">30</div>
+                                <div class="timer-label">Minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <div class="premium-features">
+                        <h3 class="features-title"><i class="fas fa-crown"></i> Premium Benefits</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-ticket-alt feature-icon"></i>
+                                <span class="feature-text">Early access to tickets (Available now for Premium members)</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chair feature-icon"></i>
+                                <span class="feature-text">Preferred seating selection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-percentage feature-icon"></i>
+                                <span class="feature-text">15% discount on concessions</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-gift feature-icon"></i>
+                                <span class="feature-text">Exclusive merchandise offers</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">Trailer</h3>
+                    <div class="trailer-container">
+                        <iframe src="https://www.youtube.com/embed/rZfwvLe961k?si=gwXwDdVjL-OFN8dI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h3 class="section-title">Ratings</h3>
+                    <div class="ratings-grid">
+                        <div class="rating-item">
+                            <div class="rating-source">IMDb</div>
+                            <div class="rating-score">N/A</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-source">Rotten Tomatoes</div>
+                            <div class="rating-score">N/A</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">About the Movie</h3>
+                    <p class="movie-synopsis">
+                        Their choices, no matter how small, have life-or-death consequences in this atmospheric and increasingly perilous night. The group must uncover the truth behind the terrifying events if they hope to survive until dawn. Based on the popular video game, this film adaptation brings new twists to the beloved horror story.
+                    </p>
+                    
+                    <div class="action-buttons">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-ticket-alt" style="margin-right: 8px;"></i> Book Early (Premium)
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="far fa-calendar-plus" style="margin-right: 8px;"></i> Add to Calendar
+                        </a>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-heart" style="margin-right: 8px;"></i> Add to Watchlist
+                        </a>
+                    </div>
+                    
+                    <h3 class="section-title">Share</h3>
+                    <div class="social-share">
+                        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    </div>
+                </div>
+            </body>
+</html>
 
