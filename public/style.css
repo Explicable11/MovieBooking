@@ -394,10 +394,15 @@ nav ul li .nav-coming-soon.active {
 }
 
 .logout-btn:hover {
-    background-color: #a3946c; /* Slightly darker gold on hover */
+    background-color: #0056b3;
 }
 
-.movies-grid {
+/* Movie Section Styles */
+.movies-grid,
+.coming-soon-section {
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
@@ -1005,59 +1010,182 @@ nav ul li .nav-coming-soon.active {
 
 
 /* Basic styling for the main layout */
+/* Premium Booking Interface Styling */
 #main-content,
 #my-bookings-view {
-    max-width: 800px; /* Limit width for better readability */
-    margin: 20px auto; /* Center the content */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 900px; /* Slightly wider for a more spacious feel */
+    margin: 40px auto; /* Increased vertical margin for better spacing */
+    padding: 35px 40px; /* More generous padding */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
 #my-bookings-view h2 {
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+    color: #1a2b4a; /* Rich, deep blue for headings */
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: 0.3px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+#my-bookings-view h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #6366f1);
+    border-radius: 2px;
 }
 
 /* Style for individual booking items */
 .booking-item {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
+    border: none;
+    padding: 22px 28px;
+    margin-bottom: 24px;
+    border-radius: 10px;
     background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s ease;
+    border-left: 4px solid #3b82f6;
+}
+
+.booking-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .booking-item h4 {
     margin-top: 0;
-    margin-bottom: 10px;
-    color: #0056b3; /* A sample highlight color */
+    margin-bottom: 14px;
+    color: #1e3a8a; /* Deep blue */
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
 }
 
 .booking-item p {
-    margin: 5px 0;
-    color: #555;
-    font-size: 0.95em;
+    margin: 8px 0;
+    color: #4b5563; /* Softer than black for better readability */
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 .booking-item p strong {
-    color: #333;
+    color: #1f2937;
+    font-weight: 600;
 }
 
 .booking-item hr {
     border: none;
-    border-top: 1px solid #eee;
-    margin: 15px 0;
+    border-top: 1px solid #f0f4f8;
+    margin: 18px 0;
 }
 
 .booking-item small {
-    color: #777;
-    font-size: 0.85em;
+    color: #6b7280;
+    font-size: 13px;
+    display: block;
+    margin-top: 6px;
 }
 
+/* Status indicators */
+.booking-status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.status-confirmed {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.status-pending {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.status-cancelled {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+/* Action buttons */
+.booking-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+.btn-outline:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+/* Empty state */
+.no-bookings {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+}
+
+.no-bookings i {
+    font-size: 40px;
+    color: #d1d5db;
+    margin-bottom: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #main-content,
+    #my-bookings-view {
+        padding: 25px 20px;
+        margin: 20px 15px;
+    }
+    
+    .booking-item {
+        padding: 18px 20px;
+    }
+}
 /* Style for messages (no bookings, error, loading) */
 #no-bookings-message,
 #bookings-error-message,
