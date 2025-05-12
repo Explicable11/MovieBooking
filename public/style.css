@@ -1,5 +1,5 @@
-/* Base Styles and Variables */
-:root {
+/* Base Styles And Variables */
+:root { 
     /* Luxury Palette: Deep Teal & Antiqued Gold */
     --primary-color: #a59566; /* Antiqued Gold - Used for accents, buttons, active states, logo */
     --secondary-color: #033c47; /* Deep Teal - Used for dark backgrounds, complementary elements, gradient */
