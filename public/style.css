@@ -226,7 +226,7 @@ form.sign-up-form {
 .btn.transparent {
     margin: 0;
     background: none;
-    border: 2px solid var(--light-color); /* White border for transparent buttons on dark panels */
+    border: 2px solid var(--light-color); /* white border for transparent buttons on dark panels */
     width: 130px;
     height: 41px;
     font-weight: 600;
