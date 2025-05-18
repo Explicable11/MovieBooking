@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Login Form Handler
+    // login Form Handler
     if (loginForm && container && moviesContainer && userNameSpan) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
