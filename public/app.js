@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      window.location.href = href;
                 }
             }
-            // For external links or hash links, allow default behavior
+            // for external links or hash links, allow default behavior
         };
     
         // Add event listeners to all links
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      overlay.style.opacity = 0;
                      overlay.style.visibility = 'hidden';
                  }
-            }, 900); // Match entry transition duration (0.6s) + delay (0.3s) + buffer
+            }, 900); // match entry transition duration (0.6s) + delay (0.3s) + buffer
         });
     
          // Initial fade-in for the first page load (or if not using pageshow)
