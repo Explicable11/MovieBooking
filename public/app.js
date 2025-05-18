@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Load all movies for the main grid from API
+    // load all movies for the main grid from API
     const loadMovies = () => {
          if (!moviesGrid) {
             console.error("Error: moviesGrid element not found.");
