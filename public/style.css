@@ -130,7 +130,7 @@ form.sign-up-form {
     max-width: 380px;
     width: 100%;
     height: 55px;
-    background-color: var(--neutral-medium); /* Lighter warm grey/taupe */
+    background-color: var(--neutral-medium); /* lighter warm grey/taupe */
     margin: 10px 0;
     border-radius: 55px;
     display: grid;
