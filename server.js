@@ -31,7 +31,7 @@ db.connect(err => {
     }
     console.log('Connected to MySQL database');
 
-    // Create tables if they don't exist
+    // create tables if they don't exist
     createTables();
 
     // --- Add theater_id column and constraint to existing bookings table if they don't exist ---
