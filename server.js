@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root', // Replace with your MySQL username
-    password: 'rootroot', // Replace with your MySQL password
+    password: '', // Replace with your MySQL password
     database: 'movie_booking_system'
 });
 
