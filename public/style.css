@@ -714,7 +714,7 @@ nav ul li .nav-coming-soon.active {
 
 .book-btn:active {
      /* --- ENHANCED 3D ON ACTIVE (PRESS) --- */
-    transform: translateY(0); /* Return to original position */
+    transform: translateY(0); /* return to original position */
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px var(--primary-color-glow); /* Inset shadow + subtle glow */
     /* --- END ENHANCED 3D ON ACTIVE (PRESS) --- */
 }
