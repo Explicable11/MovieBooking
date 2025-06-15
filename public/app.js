@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutBtn = document.getElementById('logoutBtn');
     const userNameSpan = document.getElementById('userName');
 
-    // DOM Elements for AI Feature: Recommendations Button and Modal
+    // DOM Elements For AI Feature: Recommendations Button and Modal
     const showRecommendationsBtn = document.getElementById('showRecommendationsBtn'); // Added button
     const recommendationsModal = document.getElementById('recommendationsModal'); // Added modal
     const recommendationsModalClose = document.getElementById('recommendationsModalClose'); // Added modal close
