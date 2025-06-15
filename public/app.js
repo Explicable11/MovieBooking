@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements For AI Feature: Recommendations Button and Modal
     const showRecommendationsBtn = document.getElementById('showRecommendationsBtn'); // Added button
     const recommendationsModal = document.getElementById('recommendationsModal'); // Added modal
-    const recommendationsModalClose = document.getElementById('recommendationsModalClose'); // Added modal close
+    const recommendationsModalClose = document.getElementById('recommendationsModalClose'); // Added Modal close
     const recommendationsContainer = document.getElementById('recommendationsContainer'); // Added container inside modal
     // Removed noRecommendationsMessage reference from main page, it's now inside the modal
 
