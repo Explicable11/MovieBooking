@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const theaterSelector = document.getElementById('theaterSelector');
     const summaryTheater = document.getElementById('summaryTheater');
 
-    // DOM Elements for My Bookings
+    // DOM Elements For My Bookings
     const myBookingsBtn = document.getElementById('myBookingsBtn');
     const bookingsModal = document.getElementById('bookingsModal');
     const bookingsModalClose = document.getElementById('bookingsModalClose');
