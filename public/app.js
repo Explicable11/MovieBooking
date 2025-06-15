@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const bookingsModal = document.getElementById('bookingsModal');
     const bookingsModalClose = document.getElementById('bookingsModalClose');
     const bookingsContainer = document.getElementById('bookingsContainer');
-    const noBookingsMessage = document.getElementById('noBookingsMessage'); // This one is for the bookings modal
+    const noBookingsMessage = document.getElementById('noBookingsMessage'); // This One is for the bookings modal
 
     // DOM Elements for Confirmation Modal
     const confirmationModal = document.getElementById('confirmationModal');
