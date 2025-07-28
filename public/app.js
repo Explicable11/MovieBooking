@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM elements For Sign In/Sign Up
+    // DOM elements for Sign In/Sign Up
     const container = document.querySelector('.container');
     const signUpBtn = document.querySelector('#sign-up-btn');
     const signInBtn = document.querySelector('#sign-in-btn');
