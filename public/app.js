@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginError = document.getElementById('loginError');
     const registerError = document.getElementById('registerError');
 
-    // DOM elements for Movies Page
+    // DOM elements for movies Page
     const moviesContainer = document.getElementById('moviesContainer');
     const moviesGrid = document.getElementById('moviesGrid');
     const logoutBtn = document.getElementById('logoutBtn');
